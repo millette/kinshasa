@@ -8,7 +8,7 @@ const SecondPage = ({ data }) => <div>
   <p>Welcome to page 2</p>
   <Link to="/">Go back to the homepage</Link>
   <div>
-    {data.allGithubSearch.edges.map((x) => <GithubUser key={x.node.id} { ...x.node } />)}
+    {data.allGithubSearch.edges.filter((x) => x.node && x.node.login).map((x) => <GithubUser key={x.node.id} { ...x.node } />)}
   </div>
 </div>
 
