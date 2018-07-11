@@ -1,6 +1,6 @@
 module.exports = {
   siteMetadata: {
-    title: 'Lubumbashi (Gatsby)',
+    title: 'Kinshasa (Gatsby)',
   },
   plugins: [
     'gatsby-plugin-react-helmet',
@@ -12,7 +12,7 @@ module.exports = {
         },
         queries: [
           `{
-            search(first: 100, type: USER, query: "location:lubumbashi sort:joined") {
+            search(first: 100, type: USER, query: "location:kinshasa sort:joined") {
               userCount
               pageInfo {
                 endCursor

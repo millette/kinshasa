@@ -3,17 +3,14 @@ import Link from 'gatsby-link'
 
 import GithubUser from '../components/github-user'
 
-const SecondPage = ({ data }) => {
-  console.log('DATA:', data)
-  return <div>
-    <h1>Hi from the second page</h1>
-    <p>Welcome to page 2</p>
-    <Link to="/">Go back to the homepage</Link>
-    <div>
-      {data.allGithubSearch.edges.map((x) => <GithubUser key={x.node.id} { ...x.node } />)}
-    </div>
+const SecondPage = ({ data }) => <div>
+  <h1>Hi from the second page</h1>
+  <p>Welcome to page 2</p>
+  <Link to="/">Go back to the homepage</Link>
+  <div>
+    {data.allGithubSearch.edges.map((x) => <GithubUser key={x.node.id} { ...x.node } />)}
   </div>
-}
+</div>
 
 export default SecondPage
 
