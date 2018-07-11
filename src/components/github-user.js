@@ -66,7 +66,7 @@ const GithubUser = props => {
           dépots
         </dd>
 
-        <dt>Languages</dt>
+        <dt>Langages</dt>
         <dd>{l3}</dd>
       </dl>
       {props.isHireable && <p>Disponible pour travailler</p>}
