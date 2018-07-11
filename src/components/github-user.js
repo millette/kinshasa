@@ -40,6 +40,10 @@ const GithubUser = props => {
   return (
     <div style={{ padding: '1em', margin: '1em', border: 'thin solid blue' }}>
       <h2>{props.name || props.login}</h2>
+      <a target='_blank' href={`https://github.com/${props.login}`}>{`https://github.com/${props.login}`}</a>
+      <a target='_blank' href={`https://github.com/${props.login}`}>
+        <img src={`https://avatars3.githubusercontent.com/u/${props.databaseId}?s=460&v=4`} alt={`Avatar de ${props.name || props.login}`} />
+      </a>
       {props.bio && <p>{props.bio}</p>}
       <dl>
         <dt>Location</dt>
