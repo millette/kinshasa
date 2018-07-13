@@ -42,9 +42,7 @@ const languageField = x => {
   }
 
   // sort by number of appearances
-  const languagesImp = languagesCounts
-    .sort(sorter)
-    .reverse()
+  const languagesImp = languagesCounts.sort(sorter).reverse()
 
   const languages = languagesImp
     // convert to a string
@@ -59,27 +57,31 @@ class SecondPage extends Component {
     super(props)
     this.state = {
       filter: false,
-      onlyAvailable: false
+      onlyAvailable: false,
     }
     this.click = this.click.bind(this)
     this.clickAvailable = this.clickAvailable.bind(this)
   }
 
-  clickAvailable (ev) {
+  clickAvailable(ev) {
     this.setState({ onlyAvailable: !this.state.onlyAvailable })
   }
 
-  click (ev) {
-    const filter = (ev.target.dataset.key !== 'Tous') && ev.target.dataset.key
+  click(ev) {
+    const filter = ev.target.dataset.key !== 'Tous' && ev.target.dataset.key
     this.setState({ filter })
   }
 
-  render () {
-    const filtering = (x) => {
-      if (!this.state.filter) { return true }
+  render() {
+    const filtering = x => {
+      if (!this.state.filter) {
+        return true
+      }
       let ok = false
-      if (!x.languagesImp) { return false }
-      x.languagesImp.forEach((y) => {
+      if (!x.languagesImp) {
+        return false
+      }
+      x.languagesImp.forEach(y => {
         if (y[0] === this.state.filter) {
           ok = true
         }
@@ -87,12 +89,14 @@ class SecondPage extends Component {
       return ok
     }
 
-    const filtering2 = (x) => {
-      if (!this.state.onlyAvailable) { return true }
+    const filtering2 = x => {
+      if (!this.state.onlyAvailable) {
+        return true
+      }
       return x.isHireable
     }
 
-    const { data} = this.props
+    const { data } = this.props
     const users2 = data.allGithubSearch.edges
       .filter(x => x.node && x.node.login)
       .map(x => x.node)
@@ -100,22 +104,21 @@ class SecondPage extends Component {
 
     const availableLanguagesImp = {}
 
-    users2
-      .forEach((x) => {
-        if (!x.languagesImp || !x.languagesImp.length) { return }
-        x.languagesImp.forEach((z) => {
-          if (!availableLanguagesImp[z[0]]) {
-            availableLanguagesImp[z[0]] = 0
-          }
-          availableLanguagesImp[z[0]] += (z[1] || 0)
-        })
+    users2.forEach(x => {
+      if (!x.languagesImp || !x.languagesImp.length) {
+        return
+      }
+      x.languagesImp.forEach(z => {
+        if (!availableLanguagesImp[z[0]]) {
+          availableLanguagesImp[z[0]] = 0
+        }
+        availableLanguagesImp[z[0]] += z[1] || 0
       })
+    })
 
     const users = users2.filter(filtering).filter(filtering2)
 
-    const availableLanguages2 = [
-      ['Tous', 999]
-    ]
+    const availableLanguages2 = [['Tous', 999]]
 
     let r
     for (r in availableLanguagesImp) {
@@ -123,34 +126,31 @@ class SecondPage extends Component {
     }
 
     // sort by number of appearances
-    const availableLanguages = availableLanguages2
-      .sort(sorter)
-      .reverse()
-
-    /*
-    <ul>
-      {availableLanguages.map((x) => <li>{x}</li>)}
-    </ul>
-
-    const availableLanguages = users
-      .map((x) => x.languagesImp && x.languagesImp[0])
-      .filter(Boolean)
-    */
-
-    // <pre>{JSON.stringify(availableLanguages, null, '  ')}</pre>
+    const availableLanguages = availableLanguages2.sort(sorter).reverse()
 
     return (
       <div>
         <h1>Hi from the second page</h1>
         <p>Welcome to page 2</p>
         <Link to="/">Go back to the homepage</Link>
-        <p><button type='button' onClick={this.clickAvailable}>Dispo? {this.state.onlyAvailable ? 'OUI' : 'Peu importe'}</button></p>
+        <p>
+          <button type="button" onClick={this.clickAvailable}>
+            Dispo? {this.state.onlyAvailable ? 'OUI' : 'Peu importe'}
+          </button>
+        </p>
         <div>
-          {availableLanguages.map((x) => <button type='button' data-key={x[0]} onClick={this.click} key={x[0]}>{x[0]}&nbsp;({x[1]})</button>)}
+          {availableLanguages.map(x => (
+            <button
+              type="button"
+              data-key={x[0]}
+              onClick={this.click}
+              key={x[0]}
+            >
+              {x[0]}&nbsp;({x[1]})
+            </button>
+          ))}
         </div>
-        <div>
-          {users.map(x => <GithubUser key={x.id} {...x} />)}
-        </div>
+        <div>{users.map(x => <GithubUser key={x.id} {...x} />)}</div>
       </div>
     )
   }
